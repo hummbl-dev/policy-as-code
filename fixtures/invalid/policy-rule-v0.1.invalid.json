@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "v0.1",
+  "packetStatus": "validated-example",
+  "policyManifest": {
+    "id": "policy-as-code/review-rule-v1",
+    "title": "Invalid policy rule",
+    "version": 0,
+    "scope": "change-admission"
+  },
+  "authority": {
+    "owner": "policy-as-code",
+    "canActOnBehalfOf": []
+  },
+  "rules": [
+    {
+      "id": "review-required",
+      "name": "Review required for all",
+      "condition": "",
+      "outcome": "deny",
+      "severity": "critical",
+      "exceptions": [],
+      "evaluation": "automated"
+    }
+  ],
+  "exceptionPolicy": {
+    "enabled": true,
+    "requiresReceipt": false,
+    "maxOpenDays": 0,
+    "owner": ""
+  },
+  "receiptRequirements": {
+    "ruleSource": "",
+    "evaluation": "evaluation-receipt.v0.1",
+    "review": "",
+    "finalState": "policy-state-receipt.v0.1"
+  }
+}

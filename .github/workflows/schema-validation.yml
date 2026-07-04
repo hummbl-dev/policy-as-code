@@ -1,0 +1,43 @@
+name: schema-validation
+
+on:
+  push:
+    branches:
+      - main
+      - chore/codex/policy-as-code-v0-1-packet-main
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-policy-packet:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+
+      - name: Setup Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: "20"
+
+      - name: Validate packet schema against positive fixtures
+        run: |
+          npx --yes ajv-cli@5 validate \
+            -s schemas/policy-as-code-v0.1.json \
+            -d examples/policy-rule-v0.1.example.json \
+            -d fixtures/valid/policy-rule-v0.1.valid.json \
+            --spec=draft2020
+
+      - name: Confirm invalid fixture fails validation
+        run: |
+          if npx --yes ajv-cli@5 validate \
+            -s schemas/policy-as-code-v0.1.json \
+            -d fixtures/invalid/policy-rule-v0.1.invalid.json \
+            --spec=draft2020; then
+            echo "Invalid fixture unexpectedly passed validation"
+            exit 1
+          fi
