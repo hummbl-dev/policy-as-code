@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "v0.1",
+  "packetStatus": "v0.1-draft",
+  "policyManifest": {
+    "id": "policy-as-code/review-rule-v1",
+    "title": "PR review policy rule",
+    "version": 1,
+    "scope": "change-admission",
+    "description": "A minimal set of rules for when reviews are mandatory and when escalation is required."
+  },
+  "authority": {
+    "owner": "policy-as-code",
+    "canActOnBehalfOf": ["engineering_owners", "platform_owners"]
+  },
+  "rules": [
+    {
+      "id": "review-required",
+      "name": "Review required for non-trivial changes",
+      "condition": "change.size = 'large' or change.risk = 'high'",
+      "outcome": "require-review",
+      "severity": "medium",
+      "evaluation": "hybrid",
+      "exceptions": ["security_exception", "governance_override"]
+    },
+    {
+      "id": "private-data-block",
+      "name": "Private key handling guard",
+      "condition": "artifact.includes('secret') or artifact.includes('credential')",
+      "outcome": "deny",
+      "severity": "high",
+      "evaluation": "automated",
+      "exceptions": []
+    }
+  ],
+  "exceptionPolicy": {
+    "enabled": true,
+    "requiresReceipt": true,
+    "maxOpenDays": 30,
+    "owner": "policy-governance-reviewer"
+  },
+  "receiptRequirements": {
+    "ruleSource": "rule-source-receipt.v0.1",
+    "evaluation": "evaluation-receipt.v0.1",
+    "exception": "exception-receipt.v0.1",
+    "review": "review-receipt.v0.1",
+    "finalState": "policy-state-receipt.v0.1"
+  },
+  "adjacentRepos": [
+    "governance-as-code",
+    "security-as-code",
+    "compliance-as-code",
+    "agent-as-code",
+    "observability-as-code"
+  ]
+}

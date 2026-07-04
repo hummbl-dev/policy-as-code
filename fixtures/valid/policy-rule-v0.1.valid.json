@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "v0.1",
+  "packetStatus": "validated-example",
+  "policyManifest": {
+    "id": "policy-as-code/review-rule-v1",
+    "title": "PR review policy rule",
+    "version": 1,
+    "scope": "change-admission"
+  },
+  "authority": {
+    "owner": "policy-as-code",
+    "canActOnBehalfOf": ["engineering_owners"]
+  },
+  "rules": [
+    {
+      "id": "review-required",
+      "name": "Review required for risk",
+      "condition": "change.risk = 'high'",
+      "outcome": "require-review",
+      "severity": "medium",
+      "evaluation": "manual"
+    }
+  ],
+  "exceptionPolicy": {
+    "enabled": false,
+    "requiresReceipt": false,
+    "maxOpenDays": 14
+  },
+  "receiptRequirements": {
+    "ruleSource": "rule-source-receipt.v0.1",
+    "evaluation": "evaluation-receipt.v0.1",
+    "exception": "exception-receipt.v0.1",
+    "review": "review-receipt.v0.1",
+    "finalState": "policy-state-receipt.v0.1"
+  }
+}
