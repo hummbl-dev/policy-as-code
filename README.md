@@ -30,6 +30,7 @@
 - Schema: [`schemas/policy-as-code-v0.1.json`](schemas/policy-as-code-v0.1.json)
 - Example: [`examples/policy-rule-v0.1.example.json`](examples/policy-rule-v0.1.example.json)
 - Fixtures: [`fixtures/valid/policy-rule-v0.1.valid.json`](fixtures/valid/policy-rule-v0.1.valid.json), [`fixtures/invalid/policy-rule-v0.1.invalid.json`](fixtures/invalid/policy-rule-v0.1.invalid.json)
+- Receipt: [`receipts/policy-as-code-v0.1-packet-receipt.md`](receipts/policy-as-code-v0.1-packet-receipt.md)
 
 ## Status
 
