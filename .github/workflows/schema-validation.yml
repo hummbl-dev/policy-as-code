@@ -30,14 +30,19 @@ jobs:
             -s schemas/policy-as-code-v0.1.json \
             -d examples/policy-rule-v0.1.example.json \
             -d fixtures/valid/policy-rule-v0.1.valid.json \
+            -d fixtures/valid/policy-rule-v0.1.valid-empty-optionals.json \
             --spec=draft2020
 
-      - name: Confirm invalid fixture fails validation
+      - name: Confirm invalid fixtures fail validation
         run: |
-          if npx --yes ajv-cli@5 validate \
-            -s schemas/policy-as-code-v0.1.json \
-            -d fixtures/invalid/policy-rule-v0.1.invalid.json \
-            --spec=draft2020; then
-            echo "Invalid fixture unexpectedly passed validation"
-            exit 1
-          fi
+          for fixture in fixtures/invalid/*.json; do
+            if npx --yes ajv-cli@5 validate \
+              -s schemas/policy-as-code-v0.1.json \
+              -d "$fixture" \
+              --spec=draft2020 2>/dev/null; then
+              echo "Invalid fixture unexpectedly passed validation: $fixture"
+              exit 1
+            else
+              echo "OK: $fixture correctly rejected"
+            fi
+          done
